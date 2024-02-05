@@ -30,7 +30,6 @@ export default function SignPaymentStepForm ({
 }) {
 
     const [isSigned, setIsSigned] = useState<boolean>(false)
-    const [message, setMessage] = useState<string>('')
 
     const handleSubmit = async() => {
         console.log("Handle Submit - SignPayment, data: ", data)
@@ -63,8 +62,7 @@ export default function SignPaymentStepForm ({
         })
 
         if (signature) {
-            onChange({ signature: signature })
-            setMessage(resData['paymentMessage'])
+            onChange({ signature: signature, message: resData['paymentMessage'] })
             setIsSigned(true)
             console.log("Sign Payment", data)
         }

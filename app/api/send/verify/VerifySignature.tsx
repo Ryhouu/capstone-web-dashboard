@@ -1,8 +1,7 @@
-import abi from 'ethereumjs-abi';
 import util from 'ethereumjs-util';
 import Web3 from 'web3';
 
-export function prefixed (hashString: string) {
+export function prefixed (hashString: string | undefined) {
     // return abi.soliditySHA3(
     //     ["string", "bytes32"],
     //     ["\x19Ethereum Signed Message:\n32", hash]
@@ -18,8 +17,16 @@ export function recoverSigner ({
     signature,
 }: {
     message: string,
-    signature: string
+    signature: string,
 }) {
+
+    try {
+        const split = util.fromRpcSig(signature);
+        // ... rest of the code
+    } catch (error) {
+        console.error("Error processing the signature:", signature, error);
+        // Handle the error or rethrow
+    }
     const split = util.fromRpcSig(signature);
     const messageBuffer = Buffer.from(message, 'hex');
     const publicKey = util.ecrecover(messageBuffer, split.v, split.r, split.s);
@@ -34,13 +41,19 @@ export interface VerifySignatureSchema {
     signer: string
 }
 
-export function verifySignature(param: VerifySignatureSchema) {
+export function verifySignature(params: VerifySignatureSchema) {
+    console.log("Params: ", params)
     const hashString = Web3.utils.soliditySha3(
-        {type: 'uint256', value: param.amount},
-        {type: 'address', value: param.contractAddress}
+        {type: 'uint256', value: params.amount},
+        {type: 'address', value: params.contractAddress}
     )
-    var message = prefixed (hashString || '')
-    var signer = recoverSigner({ message: message || '', signature: param.signature });
+    if (typeof(hashString) === undefined) {
+        console.error("Invalid hash string.")
+    }
+    var message = prefixed (hashString)
+    console.log("message: ", message)
+
+    var signer = recoverSigner({ message: message || '', signature: params.signature });
     return signer.toLowerCase() ==
-        util.stripHexPrefix(param.signer).toLowerCase();
+        util.stripHexPrefix(params.signer).toLowerCase();
 }
