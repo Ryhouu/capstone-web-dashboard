@@ -1,0 +1,61 @@
+.cardHoverEffect:hover {
+    border-color: gray;
+    background-color: lightgray;
+    transition: all 0.2s;
+  }
+  
+.titleHoverEffect:hover {
+    transform: translateX(4px);
+    transition: all 0.2s;
+  }
+
+
+.card {
+    display: block;
+    border-radius: 0.5rem; /* equivalent to 'rounded-lg' */
+    border: .5px solid transparent;
+    padding: 1rem; /* equivalent to 'px-5 py-4' */
+    transition: all 0.2s;
+    text-decoration: none; /* To remove underline from links */
+    border-color: rgba(228, 228, 216, 0); /* gray-300 */
+    background-color: rgba(255, 255, 255, 0);
+
+    width: 25%;
+    height: 80%;
+  }
+  
+.card:hover {
+    border: .5px solid transparent;
+    border-color: rgba(247, 247, 243, 0.3); /* gray-300 */
+    background-color: rgba(55, 65, 81, 0.3); /* bg-gray-100 */
+  }
+  
+
+.dark-mode .card:hover {
+    border-color: #4b5563; /* neutral-700 */
+    background-color: rgba(55, 65, 81, 0.3); /* bg-neutral-800 with 30% opacity */
+  }
+
+.title {
+    margin-bottom: 0.75rem; /* equivalent to 'mb-3' */
+    font-size: 1.5rem; /* equivalent to 'text-2xl' */
+    font-weight: bold; /* equivalent to 'font-semibold' */
+}
+  
+.titleArrow {
+    display: inline-block; /* equivalent to 'inline-block' */
+    transition: transform 0.2s;
+  }
+  
+.card:hover .titleArrow {
+    transform: translateX(0.25rem); /* equivalent to 'group-hover:translate-x-1' */
+  }
+  
+.description {
+    margin: 0;
+    max-width: 30ch;
+    font-size: 0.875rem; /* equivalent to 'text-sm' */
+    opacity: 0.5;
+
+  }
+  

@@ -1,0 +1,14 @@
+.centeredLayout {
+    display: flex;
+    justify-content: center; /* Align horizontally */
+    align-items: center; /* Align vertically */
+    height: 100vh; /* Full viewport height */
+    background-color: rgb(230, 234, 236);
+  }
+
+.infobox {
+  margin: 0;
+  font-size: 0.875rem; /* equivalent to 'text-sm' */
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}

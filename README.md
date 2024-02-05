@@ -1,10 +1,26 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Dependencies
+```bash
+npm install next@latest react@latest react-dom@latest
+npm install @mui/material @emotion/react @emotion/styled
+npm install styled-components
+
+npm install ethereumjs-abi
+npm i --save-dev @types/ethereumjs-abi
+npm install ethereumjs-util@latest
+
+npm install solc
+
+npm install sonner
+```
+
 ## Getting Started
 
 First, run the development server:
 
 ```bash
+
 npm run dev
 # or
 yarn dev
