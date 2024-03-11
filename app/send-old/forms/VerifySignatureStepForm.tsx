@@ -26,7 +26,7 @@ export default function VerifySignatureStepForm ({
             },
             body: JSON.stringify({ 
                 contractAddress: data.contractAddress,
-                amount: data.amountSend,
+                amount: data.escrowAmountWei,
                 signature: data.signature,
                 signer: data.senderAddress
             })

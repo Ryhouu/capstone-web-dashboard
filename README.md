@@ -13,6 +13,16 @@ npm install ethereumjs-util@latest
 npm install solc
 
 npm install sonner
+
+npm install @mui/icons-material
+
+npm install @supabase/supabase-js
+npm install ethers
+npm install notistack
+npm install @mui/x-date-pickers
+npm install @mui/x-date-pickers-pro
+npm install dayjs
+npm install fs
 ```
 
 ## Getting Started

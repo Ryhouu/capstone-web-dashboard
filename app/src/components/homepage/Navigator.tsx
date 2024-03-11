@@ -24,17 +24,17 @@ export default function Navigator() {
       </Card>
       <Card className="card">
         <CardActionArea onClick={() =>{
-            router.push('/claim')
+            router.push('/receive')
           }}>
           <Typography variant="h5" component="h2" color="primary" className="title">
-            Claim -&gt;
+            Receive -&gt;
           </Typography>
           <Typography variant="body2" color="secondary" className="description">
             Claim SepoliaETH sent from another MetaMask to you.
           </Typography>
         </CardActionArea>
       </Card>
-      <Card className="card">
+      {/* <Card className="card">
         <CardActionArea onClick={() =>{
             router.push('/split-a-bill')
           }}>
@@ -57,7 +57,7 @@ export default function Navigator() {
             View recent transactions.
           </Typography>
         </CardActionArea>
-      </Card>
+      </Card> */}
     </HorizontalLayout>
   )
 }

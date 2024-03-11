@@ -8,7 +8,7 @@ import solc from 'solc';
 import util from 'ethereumjs-util';
 import Web3 from 'web3';
 
-const web3 = new Web3('http://localhost:3000')
+const web3 = new Web3;
 
 let contractAbi: any;
 let contractBytecode: any;

@@ -42,7 +42,7 @@ export default function DeployContractStepForm ({
             from: data.senderAddress,
             gas: Number(1500000).toString(16),
             gasLimit: Number(1500000).toString(16),
-            value: Number(data.amountSend).toString(16),
+            value: Number(data.escrowAmount).toString(16),
             data: '0x' + resData['contractBytecode']
         }]
 

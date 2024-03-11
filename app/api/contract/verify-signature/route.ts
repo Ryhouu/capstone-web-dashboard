@@ -11,31 +11,15 @@ export async function POST (req: NextRequest) {
 
         isValidSignature = verifySignature(bodyJson)
 
-        console.log(bodyJson)
-
         return NextResponse.json(
-            { message: "Success" }, 
+            { 
+              message: "Success", 
+              isValidSignature: isValidSignature
+            }, 
             { status: 201 }
         )
     } catch (error) {
         console.error("Error in POST function:", error);
         return NextResponse.json({ message: "Internal Server Error : (" }, { status: 500 })
-    }
-}
-
-export async function GET (req: NextRequest) {
-    try {
-      console.log("GET - Received request");
-
-      return NextResponse.json(
-        {
-          message: "Success",
-          isValidSignature: isValidSignature
-        }, 
-        { status: 200 }
-      )
-    } catch (error) {
-      console.error("Error in GET function:", error);
-      return NextResponse.json({ message: "Method Not Allowed : (" }, { status: 405 })
     }
 }

@@ -41,7 +41,7 @@ export default function SignPaymentStepForm ({
             },
             body: JSON.stringify({ 
                 contractAddress: data.contractAddress,
-                amount: data.amountSend
+                amount: data.escrowAmount
             })
         })
 
@@ -90,8 +90,8 @@ export default function SignPaymentStepForm ({
                             name="amount"
                             variant="outlined"
                             fullWidth
-                            value={data.amountSend}
-                            onChange={(e) => onChange({ amountSend: parseInt(e.target.value) })}
+                            value={data.escrowAmount}
+                            onChange={(e) => onChange({ escrowAmount: parseInt(e.target.value) })}
                         />
                     </FormFieldSimpleLayout>
                 {/* </HorizontalLayout> */}

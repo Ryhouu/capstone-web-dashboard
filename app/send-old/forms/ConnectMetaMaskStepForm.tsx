@@ -14,6 +14,7 @@ export default function ConnectMetaMaskStepForm ({
     const handleSubmit = async () => {
         let ethereum;
         if (typeof window !== 'undefined') {
+            await window.ethereum.enable();
             ethereum = window.ethereum;
             console.log("ethereum", ethereum);
         }
@@ -26,6 +27,11 @@ export default function ConnectMetaMaskStepForm ({
             const accounts: string[] = await ethereum.request({ 
                 method: "eth_requestAccounts" 
             });
+            // window.ethereum.on('accountsChanged', function () {
+            //     web3.eth.getAccounts(function (error, accounts) {
+            //         console.log(accounts[0], 'current account after account change');
+            //     });
+            // });
             onChange({ senderAddress: accounts[0]})
         } catch (error) {
             console.log(error);

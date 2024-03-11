@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,10 +11,18 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.7",
+    "@mui/x-date-pickers": "^6.19.6",
+    "@mui/x-date-pickers-pro": "^6.19.6",
+    "@supabase/supabase-js": "^2.39.7",
+    "dayjs": "^1.11.10",
     "ethereumjs-abi": "^0.6.8",
     "ethereumjs-util": "^7.1.5",
+    "ethers": "^6.11.1",
+    "fs": "^0.0.1-security",
     "next": "^14.1.0",
+    "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-step-progress-bar": "^1.0.3",

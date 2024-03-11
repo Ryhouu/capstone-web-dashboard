@@ -15,12 +15,6 @@ import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import AddIcon from '@mui/icons-material/Add';
-import CreateIcon from '@mui/icons-material/Create';
-import MoreTimeIcon from '@mui/icons-material/MoreTime';
-import LockClockIcon from '@mui/icons-material/LockClock';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { styled, useTheme } from '@mui/material/styles';
@@ -28,34 +22,33 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import List from '@mui/material/List';
 
-
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { Alert, Backdrop, ListItemText, Snackbar, SnackbarOrigin } from '@mui/material';
+import { Backdrop, ListItemText } from '@mui/material';
+import VerifySignatureForm from './forms/VerifySignatureForm';
+import ClaimPaymentForm from './forms/ClaimPaymentForm';
 
 import { AppBar, DrawerHeader, Main, drawerWidth } from '../src/components/layout/MainLayoutWithDrawer';
-import CreatePaymentChannelForm from './forms/CreatePaymentChannelForm';
-import CreatePaymentSignatureForm from './forms/CreatePaymentSignatureForm';
-import ExtendPaymentChannelForm from './forms/ExtendPaymentChannelForm';
-import ClaimTimeoutForm from './forms/ClaimTimeoutForm';
 import AccountMenu from '../src/components/share/AccountMenu';
 import { AccountDataSchema } from '../src/components/schema/AccountDataSchema';
-import ConnectionAlertSnackbar from '../src/components/account-menu/alerts/ConnectionAlertSnackbar';
 import PaymentSignaturesTable from '../src/components/account-menu/PaymentSignaturesTable';
-import { fetchWithToast } from '../src/utils/toast';
 import PaymentChannelsTable from '../src/components/account-menu/PaymentChannelsTable';
+import ConnectionAlertSnackbar from '../src/components/account-menu/alerts/ConnectionAlertSnackbar';
+import VerifiedSignaturesTable from '../src/components/account-menu/VerifiedSignaturesTable';
 
-
-export default function SendMainPage() {
+export default function ReceiveMainPage() {
     const router = useRouter()
 
     const [isConnected, setIsConnected] = useState<boolean>(false)
     const [accountData, setAccountData] = useState<Partial<AccountDataSchema>>({})
+
     const accountMenuProps = {
         isConnected: isConnected,
         data: accountData, 
         onChange: (data: Partial<AccountDataSchema>) => {
-            setAccountData({ ...accountData, ...data, isSender: true, isReceiver: false })
+            setAccountData({ ...accountData, ...data, isReceiver: true, isSender: false })
             if (data.account) {
                 setIsConnected(true)
             }
@@ -64,9 +57,11 @@ export default function SendMainPage() {
 
     const theme = useTheme();
     const [open, setOpen] = useState(true);
+  
     const handleDrawerOpen = () => {
       setOpen(true);
     };
+  
     const handleDrawerClose = () => {
       setOpen(false);
     };
@@ -80,11 +75,10 @@ export default function SendMainPage() {
     };
 
     const forms = [
-        <CreatePaymentChannelForm {...accountMenuProps} />,
-        <CreatePaymentSignatureForm {...accountMenuProps} />,
-        <ExtendPaymentChannelForm {...accountMenuProps} />,
-        <ClaimTimeoutForm {...accountMenuProps} />,
+        <VerifySignatureForm {...accountMenuProps} />,
+        <ClaimPaymentForm {...accountMenuProps} />
     ]
+
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [activeForm, setActiveForm] = useState<React.ReactElement>()
 
@@ -102,12 +96,12 @@ export default function SendMainPage() {
         }
     };
 
-    const [openPaymentSignatures, setOpenPaymentSignatures] = React.useState(false)
-    const handleClosePaymentSignatures = () => {
-        setOpenPaymentSignatures(false)
+    const [openVerifiedSignatures, setOpenVerifiedSignatures] = React.useState(false)
+    const handleOpenVerifiedSignatures = async () => {
+        setOpenVerifiedSignatures(true)
     }
-    const handleOpenPaymentSignatures = async () => {
-        setOpenPaymentSignatures(true)
+    const handleCloseVerifiedSignatures = () => {
+        setOpenVerifiedSignatures(false)
     }
 
     const [openPaymentChannels, setOpenPaymentChannels] = React.useState(false)
@@ -133,11 +127,11 @@ export default function SendMainPage() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              Send Payment
+              Receive Payment
             </Typography>
             <AccountMenu 
                 {...accountMenuProps}
-                handleOpenPaymentSignatures={handleOpenPaymentSignatures}
+                handleOpenPaymentSignatures={handleOpenVerifiedSignatures}
                 handleOpenPaymentChannels={handleOpenPaymentChannels}
             />
           </Toolbar>
@@ -162,7 +156,6 @@ export default function SendMainPage() {
           </DrawerHeader>
 
           <Divider />
-
           <List component="nav">
             {actionItems.map((item, index) => (
             <ListItem key={item.label} disablePadding>
@@ -180,7 +173,6 @@ export default function SendMainPage() {
           </List>
 
           <Divider />
-
           <List>
             <ListItem key={"Home"} disablePadding>
                 <ListItemButton
@@ -196,7 +188,7 @@ export default function SendMainPage() {
             </ListItem>
           </List>
         </Drawer>
-        
+
         <Main open={open}>
           <DrawerHeader />
           { activeForm }
@@ -208,19 +200,19 @@ export default function SendMainPage() {
                 color: '#fff', 
                 zIndex: (theme) => (theme.zIndex.drawer + 1),
                 padding: '20px',
-                display: 'flex',      // Enables Flexbox
-                flexDirection: 'column', // Stacks children vertically
-                alignItems: 'center', // Aligns children to the start of the flex container,
+                display: 'flex',   
+                flexDirection: 'column', 
+                alignItems: 'center', 
                 justifyContent: 'center',
-                gap: 2,              // Optional: Adds space between children
+                gap: 2,             
             }}
-            open={openPaymentSignatures}
+            open={openVerifiedSignatures}
         >
             {
-                accountData.isSender && 
-                <PaymentSignaturesTable accountData={accountData} open={openPaymentSignatures} />
+                accountData.isReceiver && 
+                <VerifiedSignaturesTable accountData={accountData} open={openVerifiedSignatures} />
             }
-            <IconButton aria-label="close" onClick={handleClosePaymentSignatures}>
+            <IconButton aria-label="close" onClick={handleCloseVerifiedSignatures}>
                 <CloseIcon />
             </IconButton>
         </Backdrop>
@@ -249,19 +241,11 @@ export default function SendMainPage() {
 
 const actionItems = [
     {
-        label: "Create Payment Channel",
-        icon: <AddIcon />,
+        label: "Verify Signature",
+        icon: <VerifiedIcon />,
     },
     {
-        label: "Sign Payment",
-        icon: <CreateIcon />,
-    },
-    {
-        label: "Extend Channel",
-        icon: <MoreTimeIcon />,
-    },
-    {
-        label: "Claim Timeout",
-        icon: <LockClockIcon />,
+        label: "Claim Payment",
+        icon: <RequestQuoteIcon />,
     },
 ]
